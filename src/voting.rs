@@ -1,4 +1,6 @@
 pub mod structs {
+
+    #[derive(Debug)]
     pub struct Voter{
         id: u32,
         name: String,

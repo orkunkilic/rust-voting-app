@@ -1,8 +1,44 @@
 mod voting;
 pub use crate::voting::structs::*;
+use std::io::stdin;
 
 fn main() {
     let mut voters = Vec::new();
+    //  let mut auctions = Vec::new();
+
+    loop {
+        let mut input = String::new();
+
+        stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
+
+        let input: u32 = match input.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        if (input == 0) {
+            break;
+        } else if (input == 1) {
+            let mut input = String::new();
+            
+            println!("Enter the name and age of the voter (name, age): ");
+            stdin()
+                .read_line(&mut input)
+                .expect("Failed to read line");
+
+            let input: Vec<&str> = input.trim().split(",").collect();
+
+            voters.push(add_voter(voters.len().try_into().unwrap() ,input[0].to_string(), input[1].trim().parse().unwrap()));
+
+            println!("Voter added successfully");
+        } else if (input == 2) {
+
+        } else if (input == 3) {
+
+        }
+    }
     for i in 1..6{
         let voter = Voter::new(i, "John".to_string(), 18);
         voters.push(voter);
@@ -22,3 +58,10 @@ fn main() {
     }
     println!("{:?}", auction.get_votes());
 }
+
+fn add_voter(id: u32, name: String, age: u8) -> Voter {
+    let voter = Voter::new(id, name, age);
+    return voter;
+}
+
+
