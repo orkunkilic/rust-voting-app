@@ -30,6 +30,7 @@ pub mod structs {
 
     }
     
+    #[derive(Debug)]
     pub struct Auction {
         id: u16,
         title: String,
@@ -69,10 +70,12 @@ pub mod structs {
             self.is_ended = true;
         }
 
-        pub fn vote(&mut self, vote: Vote) {
-            if self.is_started && !self.is_ended {
+        pub fn vote(&mut self, vote: Vote) -> bool {
+            if self.is_started && !self.is_ended && self.eligible_voter_ids.contains(&vote.voter_id) {
                 self.votes.push(vote);
+                return true;
             }
+            return false;
         }
 
         pub fn get_votes(&self) -> Vec<Vote> {
